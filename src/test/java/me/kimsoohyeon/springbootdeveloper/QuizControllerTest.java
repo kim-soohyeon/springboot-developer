@@ -44,8 +44,7 @@ class QuizControllerTest {
 
         //when
         final ResultActions result = mockMvc.perform(get(url)
-                .param("code", "1")
-                .accept(MediaType.APPLICATION_JSON));
+                .param("code", "1"));
 
         //then
         result
@@ -53,4 +52,19 @@ class QuizControllerTest {
                 .andExpect(content().string("Created!"));
     }
 
+    @DisplayName("quiz(): GET /quiz?code=2 이면 응답 코드는 400," +
+            "응답 본문은 Bad Request!를 리턴한다.")
+    @Test
+    public void getQuiz2() throws Exception {
+
+        final String url = "/quiz";
+
+        final ResultActions result = mockMvc.perform(get(url)
+                .param("code", "2"));
+
+        result
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Bad Request!"));
+
+    }
 }
