@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -67,4 +69,22 @@ class QuizControllerTest {
                 .andExpect(content().string("Bad Request!"));
 
     }
+
+    @DisplayName("quiz(): POST /quiz?code=1 이면 응답 코드는 403," +
+            "응답 본문은 Forbidden!를 리턴한다.")
+    @Test
+    public void postQuiz1() throws Exception {
+
+        final String url = "/quiz";
+
+        final ResultActions result = mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new Code(1))));
+
+        result
+                .andExpect(status().isForbidden())
+                .andExpect(content().string("Forbidden!"));
+
+    }
+
 }
