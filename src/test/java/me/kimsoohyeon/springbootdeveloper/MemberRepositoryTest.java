@@ -45,4 +45,16 @@ class MemberRepositoryTest {
         //then
         assertThat(member.getId()).isEqualTo(3);
     }
+
+    @Test
+    void saveMember(){
+        //given
+        Member member = new Member(1L, "A");
+
+        //when
+        memberRepository.save(member);
+
+        //then
+        assertThat(memberRepository.findById(1L).get().getName()).isEqualTo("A");
+    }
 }
