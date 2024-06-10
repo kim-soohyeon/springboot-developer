@@ -70,4 +70,16 @@ class MemberRepositoryTest {
         //then
         assertThat(memberRepository.findAll().size()).isEqualTo(2);
     }
+
+    @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
+    @Test
+    void deleteMemberById(){
+        //when
+        memberRepository.deleteById(2L);
+
+        //then
+//        assertThat(memberRepository.findById(2L).isEmpty()).isTrue();
+
+        assertThat(memberRepository.findById(2L)).isEmpty();
+    }
 }
