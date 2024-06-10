@@ -25,4 +25,24 @@ class MemberRepositoryTest {
         //then
         assertThat(members.size()).isEqualTo(3);
     }
+
+    @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
+    @Test
+    void getMemberById(){
+        //when
+        Member member = memberRepository.findById(2L).get();
+
+        //then
+        assertThat(member.getName()).isEqualTo("B");
+    }
+
+    @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
+    @Test
+    void getMemberByName(){
+        //when
+        Member member = memberRepository.findByName("C").get();
+
+        //then
+        assertThat(member.getId()).isEqualTo(3);
+    }
 }
