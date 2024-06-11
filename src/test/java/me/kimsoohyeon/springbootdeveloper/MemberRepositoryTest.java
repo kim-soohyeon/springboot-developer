@@ -1,5 +1,6 @@
 package me.kimsoohyeon.springbootdeveloper;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,6 +16,11 @@ class MemberRepositoryTest {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @AfterEach
+    public void cleanUp(){
+        memberRepository.deleteAll();
+    }
 
     @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
     @Test
@@ -81,5 +87,15 @@ class MemberRepositoryTest {
 //        assertThat(memberRepository.findById(2L).isEmpty()).isTrue();
 
         assertThat(memberRepository.findById(2L)).isEmpty();
+    }
+
+    @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
+    @Test
+    void deleteAll(){
+        //when
+        memberRepository.deleteAll();
+
+//        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+        assertThat(memberRepository.findAll().size()).isZero();
     }
 }
