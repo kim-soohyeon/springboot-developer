@@ -98,4 +98,17 @@ class MemberRepositoryTest {
 //        assertThat(memberRepository.findAll().size()).isEqualTo(0);
         assertThat(memberRepository.findAll().size()).isZero();
     }
+
+    @Sql("/insert-members.sql")//test 수행 전 sql 스크립트 실행
+    @Test
+    void update(){
+        //given
+        Member member = memberRepository.findById(2L).get();
+
+        //when
+        member.changeName("BC");
+
+//        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+        assertThat(memberRepository.findById(2L).get().getName()).isEqualTo("BC");
+    }
 }
