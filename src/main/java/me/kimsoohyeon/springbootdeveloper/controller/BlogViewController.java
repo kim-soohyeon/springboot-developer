@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimsoohyeon.springbootdeveloper.domain.Article;
 import me.kimsoohyeon.springbootdeveloper.dto.ArticleListViewResponse;
 import me.kimsoohyeon.springbootdeveloper.dto.ArticleResponse;
+import me.kimsoohyeon.springbootdeveloper.dto.ArticleViewResponse;
 import me.kimsoohyeon.springbootdeveloper.service.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class BlogViewController {
     @GetMapping("/articles/{id}")
     public String getArticle(@PathVariable Long id, Model model){
         Article article = blogService.findById(id);
-        model.addAttribute("article", new ArticleResponse(article));
+        model.addAttribute("article", new ArticleViewResponse(article));
 
         return "article";
     }
